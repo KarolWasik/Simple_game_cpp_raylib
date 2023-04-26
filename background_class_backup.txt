@@ -1,0 +1,91 @@
+#include "backgroudn.h"
+
+void background ::load_texture(Texture2D bg, Texture2D mg, Texture2D fg)
+{
+    this->bg_tex = bg;
+    this->fg_tex = fg;
+    this->mg_tex = mg;
+}
+
+void background ::set_position()
+{
+    this->bg_pos.x = 0.0;
+    this->bg_pos.y = 0.0;
+    this->bg_pos1.x = 0.0;
+    this->bg_pos1.y = 0.0;
+
+    this->fg_pos.x = 0.0;
+    this->fg_pos.y = 0.0;
+    this->fg_pos1.x = 0.0;
+    this->fg_pos1.y = 0.0;
+
+    this->mg_pos.x = 0.0;
+    this->mg_pos.y = 0.0;
+    this->mg_pos1.x = 0.0;
+    this->mg_pos1.y = 0.0;
+}
+
+void background ::update_position()
+{
+    if (bg_x <= -bg_tex.width * 2)
+    {
+        bg_x = 0.0;
+    }
+    this->bg_x += GetFrameTime() * -20;
+    this->bg_pos.x = this->bg_x;
+    this->bg_pos1.x = this->bg_x + bg_tex.width * 2;
+}
+
+void background ::draw_background()
+{
+    update_position();
+    DrawTextureEx(this->bg_tex, this->bg_pos, 0.0, 2.0, WHITE);
+    DrawTextureEx(this->bg_tex, this->bg_pos1, 0.0, 2.0, WHITE);
+}
+
+background ::background(Texture2D bg, Texture2D mg, Texture2D fg)
+{
+    load_texture(bg, mg,fg);
+    set_position();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include "raylib.h"
+class background
+{
+    private:
+    Texture2D bg_tex;
+    Texture2D mg_tex;
+    Texture2D fg_tex;
+    float bg_x= -1.0;
+    float mg_x= -1.0;
+    float fg_x= -1.0;
+    Vector2 bg_pos;
+    Vector2 bg_pos1;
+    Vector2 fg_pos;
+    Vector2 fg_pos1;
+    Vector2 mg_pos;
+    Vector2 mg_pos1;
+
+    void load_texture(Texture2D bg, Texture2D mg, Texture2D fg);
+    void set_position();
+    
+    public:
+    void update_position();
+    void draw_background();
+    background(Texture2D bg, Texture2D mg, Texture2D fg);
+
+
+};
